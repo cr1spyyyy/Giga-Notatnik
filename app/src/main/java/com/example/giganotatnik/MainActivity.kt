@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         val audioRecyclerView = findViewById<RecyclerView>(R.id.audioRecyclerView)
         val audioFiles = filesDir.listFiles()?.filter { it.extension == "3gp" } ?: emptyList()
 
-        val audioAdapter = AudioNoteAdapter(audioFiles, this) { file ->
+        audioAdapter = AudioNoteAdapter(audioFiles, this) { file ->
             if (file.delete()) {
                 val updatedFiles = filesDir.listFiles()?.filter { it.extension == "3gp" } ?: emptyList()
                 audioAdapter.updateAudioFiles(updatedFiles)
@@ -124,6 +124,7 @@ class MainActivity : AppCompatActivity() {
 
         audioRecyclerView.layoutManager = LinearLayoutManager(this)
         audioRecyclerView.adapter = audioAdapter
+
 
 
 
@@ -230,13 +231,12 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Zapisano notatkę głosową: ${audioFile?.name}", Toast.LENGTH_SHORT).show()
         showNotification("Zapisano notatkę głosową", audioFile?.name ?: "Plik audio")
 
-        val updatedFiles = filesDir.listFiles()?.filter { it.extension == "3gp" } ?: emptyList()
-        audioAdapter.updateAudioFiles(
-            filesDir.listFiles()?.filter { it.extension == "3gp" } ?: emptyList()
-        )
-
-
+        if (::audioAdapter.isInitialized) {
+            val updatedFiles = filesDir.listFiles()?.filter { it.extension == "3gp" } ?: emptyList()
+            audioAdapter.updateAudioFiles(updatedFiles)
+        }
     }
+
     private fun startSpeechRecognition() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
