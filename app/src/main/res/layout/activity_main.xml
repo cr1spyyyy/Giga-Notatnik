@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/editTextNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Wpisz notatkę tekstową"
+            android:textColor="@color/black"
+            android:minHeight="100dp"
+            android:background="@drawable/edittext_background"
+            android:padding="12dp"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnSaveText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zapisz notatkę tekstową"
+            android:background="?attr/colorSurface"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginTop="12dp" />
+
+        <Button
+            android:id="@+id/btnRecord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nagraj notatkę głosową"
+            android:background="?attr/colorSurface"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginTop="12dp" />
+
+        <Button
+            android:id="@+id/btnShare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Udostępnij przez SMS"
+            android:background="?attr/colorSurface"
+            android:textColor="?attr/colorOnBackground"
+            android:layout_marginTop="12dp" />
+
+        <Button
+            android:id="@+id/btnSpeechToText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rozpoznaj mowę"
+            android:background="?attr/colorSurface"
+            android:textColor="?attr/colorOnSurface"
+            android:layout_marginTop="12dp" />
+
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Szukaj notatki..." />
+
+        <Button
+            android:id="@+id/btnSort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sortuj według daty"
+            android:layout_marginTop="12dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/noteRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/audioRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" />
+
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">GigaNotatnik</string>
+    <string name="record_note">Nagraj notatkę głosową</string>
+    <string name="save_text_note">Zapisz notatkę tekstową</string>
+    <string name="share_sms">Udostępnij przez SMS</string>
+</resources>
