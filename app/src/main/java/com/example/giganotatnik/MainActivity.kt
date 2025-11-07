@@ -108,9 +108,10 @@ class MainActivity : AppCompatActivity() {
             noteAdapter.updateNotes(notes)
         }
 
-        // Adapter notatek głosowych
+// Adapter notatek głosowych
         val audioRecyclerView = findViewById<RecyclerView>(R.id.audioRecyclerView)
         val audioFiles = filesDir.listFiles()?.filter { it.extension == "3gp" } ?: emptyList()
+
         val audioAdapter = AudioNoteAdapter(audioFiles, this) { file ->
             if (file.delete()) {
                 val updatedFiles = filesDir.listFiles()?.filter { it.extension == "3gp" } ?: emptyList()
@@ -120,6 +121,10 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Nie udało się usunąć pliku", Toast.LENGTH_SHORT).show()
             }
         }
+
+        audioRecyclerView.layoutManager = LinearLayoutManager(this)
+        audioRecyclerView.adapter = audioAdapter
+
 
 
         // Rozpoznawanie mowy
@@ -226,7 +231,9 @@ class MainActivity : AppCompatActivity() {
         showNotification("Zapisano notatkę głosową", audioFile?.name ?: "Plik audio")
 
         val updatedFiles = filesDir.listFiles()?.filter { it.extension == "3gp" } ?: emptyList()
-        audioAdapter.updateAudioFiles(updatedFiles)
+        audioAdapter.updateAudioFiles(
+            filesDir.listFiles()?.filter { it.extension == "3gp" } ?: emptyList()
+        )
 
 
     }
