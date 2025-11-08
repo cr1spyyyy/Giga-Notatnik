@@ -2,42 +2,39 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="?attr/colorSurface"
+    android:padding="24dp">
 
     <SearchView
         android:id="@+id/searchView"
         style="@style/AppSearchView"
+        android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:queryHint="@string/search_notes" />
+        android:layout_height="wrap_content"/>
+
 
     <Button
         android:id="@+id/btnSort"
         style="@style/AppButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/sort_notes" />
+        android:text="@string/sort_notes"
+        android:layout_marginBottom="12dp"/>
 
     <Button
         android:id="@+id/btnBackToMain"
         style="@style/AppButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Powrót do strony głównej"
-        android:layout_marginTop="12dp"/>
+        android:text="@string/back_to_main"
+        android:layout_marginBottom="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/noteRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="12dp" />
+        android:layout_marginBottom="12dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/audioRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="12dp" />
-
+        android:layout_weight="1"/>
 </LinearLayout>

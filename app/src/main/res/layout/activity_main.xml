@@ -2,19 +2,26 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="?attr/colorSurface"
+    android:padding="24dp">
+
+    <TextView
+        android:text="@string/app_title"
+        android:textSize="24sp"
+        android:textColor="?attr/colorPrimary"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btnGoToCreate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nowa notatka" />
+        style="@style/AppButton"
+        android:text="@string/new_note"
+        android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/btnGoToHistory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Historia notatek"
-        android:layout_marginTop="12dp" />
-
+        style="@style/AppButton"
+        android:text="@string/note_history"/>
 </LinearLayout>
