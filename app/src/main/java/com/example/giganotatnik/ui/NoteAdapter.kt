@@ -14,21 +14,21 @@ import android.content.Context
 import android.widget.Button
 
 
-class NoteAdapter(private var notes: List<Note>,
-                  private val context: Context,
-                  private val onDelete: (Note) -> Unit) :
-    RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter(
+    private var notes: List<Note>,
+    private val context: Context,
+    private val onDelete: (Note) -> Unit
+) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
+    // lista aktualnie wyświetlana (może być filtrowana/sortowana)
+    private var displayedNotes: List<Note> = notes
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val content: TextView = itemView.findViewById(R.id.noteContent)
         val timestamp: TextView = itemView.findViewById(R.id.noteTimestamp)
         val shareButton: Button = itemView.findViewById(R.id.btnShareNote)
-
         val deleteButton: Button = itemView.findViewById(R.id.btnDeleteNote)
-
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -37,10 +37,11 @@ class NoteAdapter(private var notes: List<Note>,
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val note = notes[position]
+        val note = displayedNotes[position]
         holder.content.text = note.content
         holder.timestamp.text = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
             .format(Date(note.timestamp))
+
         holder.shareButton.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
@@ -48,17 +49,28 @@ class NoteAdapter(private var notes: List<Note>,
             }
             context.startActivity(Intent.createChooser(shareIntent, "Udostępnij notatkę przez"))
         }
+
         holder.deleteButton.setOnClickListener {
             onDelete(note)
         }
-
-
     }
 
-    override fun getItemCount(): Int = notes.size
+    override fun getItemCount(): Int = displayedNotes.size
 
     fun updateNotes(newNotes: List<Note>) {
         notes = newNotes
+        displayedNotes = newNotes
+        notifyDataSetChanged()
+    }
+
+    fun filterNotes(query: String) {
+        displayedNotes = notes.filter { it.content.contains(query, ignoreCase = true) }
+        notifyDataSetChanged()
+    }
+
+    fun sortNotes() {
+        displayedNotes = displayedNotes.sortedBy { it.timestamp }
         notifyDataSetChanged()
     }
 }
+

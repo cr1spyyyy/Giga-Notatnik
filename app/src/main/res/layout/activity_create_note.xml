@@ -1,0 +1,59 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/editTextNote"
+            style="@style/AppEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"
+            android:background="@drawable/edittext_background"
+            android:hint="@string/note_hint"
+            android:inputType="textMultiLine"
+            android:autofillHints="none" />
+
+        <Button
+            android:id="@+id/btnSaveText"
+            style="@style/AppButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save_text_note" />
+
+        <Button
+            android:id="@+id/btnRecord"
+            style="@style/AppButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/record_note" />
+
+        <Button
+            android:id="@+id/btnShare"
+            style="@style/AppButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/share_sms" />
+
+        <Button
+            android:id="@+id/btnSpeechToText"
+            style="@style/AppButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/speech_to_text" />
+
+        <Button
+            android:id="@+id/btnBackToMain"
+            style="@style/AppButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Powrót do strony głównej"
+            android:layout_marginTop="12dp"/>
+
+    </LinearLayout>
+</ScrollView>

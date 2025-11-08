@@ -10,20 +10,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="note_20231107_1824.3gp"
+        android:text="@string/audio_file_example"
         android:textSize="16sp" />
 
     <Button
         android:id="@+id/btnPlayAudio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Odtwórz" />
+        android:text="@string/play_audio" />
 
     <Button
         android:id="@+id/btnDeleteAudio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Usuń"
+        android:text="@string/delete_audio"
         android:layout_marginStart="8dp" />
 
 </LinearLayout>
