@@ -53,18 +53,26 @@ class CreateNoteActivity : AppCompatActivity() {
             speechManager.startListening { text -> noteEditText.setText(text) }
         }
 
-        // Nagrywanie audio
+// Nagrywanie audio
         recordButton.setOnClickListener {
             if (!isRecording) {
                 recorderManager.startRecording()
                 recordButton.text = getString(R.string.stop_recording)
             } else {
                 val file = recorderManager.stopRecording()
-                notificationHelper.show(getString(R.string.audio_saved), file?.name ?: "audio")
+                if (file != null) {
+                    // Zapis do bazy jako notatka audio
+                    viewModel.addAudioNote(
+                        title = file.name,
+                        audioPath = file.absolutePath
+                    )
+                    notificationHelper.show(getString(R.string.audio_saved), file.name)
+                }
                 recordButton.text = getString(R.string.record_note)
             }
             isRecording = !isRecording
         }
+
 
         // Zapis notatki tekstowej
         saveButton.setOnClickListener {

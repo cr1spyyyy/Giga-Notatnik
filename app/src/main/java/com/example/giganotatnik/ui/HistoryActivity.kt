@@ -9,76 +9,77 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giganotatnik.R
+import com.example.giganotatnik.audio.AudioPlayerManager
 
 class HistoryActivity : AppCompatActivity() {
 
     private lateinit var viewModel: NoteViewModel
-    private lateinit var noteAdapter: NoteAdapter
-    private lateinit var audioAdapter: AudioNoteAdapter
+    private lateinit var unifiedAdapter: UnifiedNoteAdapter
+    private lateinit var audioPlayerManager: AudioPlayerManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
 
         viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
+        audioPlayerManager = AudioPlayerManager(this)
 
-        setupRecyclerViews()
+        setupRecyclerView()
         setupUI()
     }
 
     private fun setupUI() {
         val searchView = findViewById<SearchView>(R.id.searchView)
 
-        // Wyszukiwanie
+        // Wyszukiwanie w notatkach
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { noteAdapter.filterNotes(it) }
+                query?.let { unifiedAdapter.updateNotes(
+                    viewModel.allNotes.value?.filter { note ->
+                        note.title.contains(it, ignoreCase = true) ||
+                                note.content.contains(it, ignoreCase = true)
+                    } ?: emptyList()
+                )}
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let { noteAdapter.filterNotes(it) }
+                newText?.let { unifiedAdapter.updateNotes(
+                    viewModel.allNotes.value?.filter { note ->
+                        note.title.contains(it, ignoreCase = true) ||
+                                note.content.contains(it, ignoreCase = true)
+                    } ?: emptyList()
+                )}
                 return true
             }
         })
-
-
     }
 
-    private fun setupRecyclerViews() {
-        // Notatki tekstowe
-        val noteRecyclerView = findViewById<RecyclerView>(R.id.noteRecyclerView)
-        noteAdapter = NoteAdapter(emptyList(), this) { note ->
-            viewModel.deleteNote(note)
-        }
-        noteRecyclerView.layoutManager = LinearLayoutManager(this)
-        noteRecyclerView.adapter = noteAdapter
+    private fun setupRecyclerView() {
+        val unifiedRecyclerView = findViewById<RecyclerView>(R.id.unifiedRecyclerView)
+
+        unifiedAdapter = UnifiedNoteAdapter(
+            emptyList(),
+            this,
+            onDelete = { note ->
+                viewModel.deleteNote(note)
+            },
+            onClick = { note ->
+                Toast.makeText(this, "Kliknięto: ${note.title}", Toast.LENGTH_SHORT).show()
+            },
+            audioPlayerManager = audioPlayerManager // przekazanie managera
+        )
+
+        unifiedRecyclerView.layoutManager = LinearLayoutManager(this)
+        unifiedRecyclerView.adapter = unifiedAdapter
 
         viewModel.allNotes.observe(this) { notes ->
-            noteAdapter.updateNotes(notes)
+            unifiedAdapter.updateNotes(notes)
         }
-
-        // Notatki audio
-        val audioRecyclerView = findViewById<RecyclerView>(R.id.audioRecyclerView)
-        audioAdapter = AudioNoteAdapter(emptyList(), this) { file ->
-            if (file.delete()) {
-                val updatedFiles = filesDir.listFiles()?.filter { it.extension == "3gp" } ?: emptyList()
-                audioAdapter.updateAudioFiles(updatedFiles)
-                Toast.makeText(this, "Usunięto: ${file.name}", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Nie udało się usunąć pliku", Toast.LENGTH_SHORT).show()
-            }
-        }
-        audioRecyclerView.layoutManager = LinearLayoutManager(this)
-        audioRecyclerView.adapter = audioAdapter
-
-        val audioFiles = filesDir.listFiles()?.filter { it.extension == "3gp" } ?: emptyList()
-        audioAdapter.updateAudioFiles(audioFiles)
 
         val backButton = findViewById<Button>(R.id.btnBackToMain)
         backButton.setOnClickListener {
-            finish() // zamyka HistoryActivity i wraca do MainActivity
+            finish()
         }
-
     }
 }
