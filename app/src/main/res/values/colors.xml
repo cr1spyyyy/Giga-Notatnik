@@ -2,12 +2,12 @@
 <resources>
     <!--  Jasny motyw -->
 
-    <color name="background_light">#E0E0E0</color>           <!-- tło aplikacji -->
-    <color name="surface_light">#D6D6D6</color>              <!-- powierzchnie, pola -->
-    <color name="primary_light">#3A7F74</color>              <!-- główny kolor -->
-    <color name="primary_mint_light">#5FA88C</color>         <!-- miętowy -->
-    <color name="primary_teal_light">#2F6F63</color>         <!-- turkusowy -->
-    <color name="text_primary_light">#111111</color>         <!-- tekst -->
+    <color name="background_light">#E0E0E0</color>
+    <color name="surface_light">#D6D6D6</color>
+    <color name="primary_light">#3A7F74</color>
+    <color name="primary_mint_light">#5FA88C</color>
+    <color name="primary_teal_light">#2F6F63</color>
+    <color name="text_primary_light">#111111</color>
     <color name="text_on_button_light">#FFFFFF</color>
 
     <!-- Ciemny motyw -->

@@ -27,18 +27,12 @@
         android:id="@+id/btnShareNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/share_note"
-        android:background="?attr/colorSurface"
-        android:textColor="?attr/colorOnSurface"
-        android:layout_marginTop="8dp" />
+        android:text="@string/share_note" />
 
     <Button
         android:id="@+id/btnDeleteNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/delete_note"
-        android:background="?attr/colorSurface"
-        android:textColor="?attr/colorOnSurface"
-        android:layout_marginTop="8dp" />
+        android:text="@string/delete_note" />
 
 </LinearLayout>

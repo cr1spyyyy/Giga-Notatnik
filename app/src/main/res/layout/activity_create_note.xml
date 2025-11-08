@@ -33,12 +33,6 @@
             android:layout_marginBottom="12dp"/>
 
         <Button
-            android:id="@+id/btnShare"
-            style="@style/AppButton"
-            android:text="@string/share_sms"
-            android:layout_marginBottom="12dp"/>
-
-        <Button
             android:id="@+id/btnSpeechToText"
             style="@style/AppButton"
             android:text="@string/speech_to_text"

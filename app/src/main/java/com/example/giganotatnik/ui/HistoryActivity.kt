@@ -28,7 +28,6 @@ class HistoryActivity : AppCompatActivity() {
 
     private fun setupUI() {
         val searchView = findViewById<SearchView>(R.id.searchView)
-        val sortButton = findViewById<Button>(R.id.btnSort)
 
         // Wyszukiwanie
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -43,11 +42,7 @@ class HistoryActivity : AppCompatActivity() {
             }
         })
 
-        // Sortowanie
-        sortButton.setOnClickListener {
-            noteAdapter.sortNotes()
-            Toast.makeText(this, getString(R.string.notes_sorted), Toast.LENGTH_SHORT).show()
-        }
+
     }
 
     private fun setupRecyclerViews() {

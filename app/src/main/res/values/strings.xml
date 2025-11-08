@@ -21,7 +21,6 @@
 
     <!-- Historia notatek -->
     <string name="search_notes">Szukaj notatki</string>
-    <string name="sort_notes">Sortuj według daty</string>
     <string name="notes_sorted">Notatki zostały posortowane</string>
 
     <!-- Elementy listy -->

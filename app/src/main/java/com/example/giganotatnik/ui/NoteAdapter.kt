@@ -20,7 +20,7 @@ class NoteAdapter(
     private val onDelete: (Note) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
-    // lista aktualnie wyświetlana (może być filtrowana/sortowana)
+    // lista aktualnie wyświetlana (może być filtrowana)
     private var displayedNotes: List<Note> = notes
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -68,9 +68,5 @@ class NoteAdapter(
         notifyDataSetChanged()
     }
 
-    fun sortNotes() {
-        displayedNotes = displayedNotes.sortedBy { it.timestamp }
-        notifyDataSetChanged()
-    }
 }
 
