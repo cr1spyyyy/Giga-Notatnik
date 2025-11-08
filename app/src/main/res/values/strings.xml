@@ -18,6 +18,7 @@
     <string name="share_sms">Udostępnij przez SMS</string>
     <string name="note_saved">Zapisano notatkę</string>
     <string name="audio_saved">Zapisano notatkę głosową</string>
+    <string name="note_title_hint">Wpisz tytuł</string>
 
     <!-- Historia notatek -->
     <string name="search_notes">Szukaj notatki</string>

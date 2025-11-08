@@ -10,6 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Pole tytułu notatki -->
+        <EditText
+            android:id="@+id/editTextTitle"
+            style="@style/AppEditText"
+            android:hint="@string/note_title_hint"
+            android:inputType="textCapSentences"
+            android:layout_marginBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- Pole treści notatki -->
         <EditText
             android:id="@+id/editTextNote"
             style="@style/AppEditText"

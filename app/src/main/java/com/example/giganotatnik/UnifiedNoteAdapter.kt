@@ -50,7 +50,7 @@ class UnifiedNoteAdapter(
 
         if (holder is TextNoteViewHolder) {
             // Tekstowa notatka
-            holder.content.text = note.content
+           // holder.content.text = note.content
             holder.timestamp.text = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
                 .format(Date(note.timestamp))
 
@@ -64,17 +64,21 @@ class UnifiedNoteAdapter(
 
             holder.deleteButton.setOnClickListener { onDelete(note) }
             holder.itemView.setOnClickListener { onClick(note) }
+            holder.title.text = note.title.ifBlank { note.content.take(30) }
 
         } else if (holder is AudioNoteViewHolder) {
             // Audio notatka
-            holder.fileName.text = note.title.ifEmpty { "Audio Note" }
+            holder.title.text = note.title.ifBlank { "Nagranie audio" }
+            //holder.fileName.text = File(note.audioPath ?: "").name
+            holder.timestamp.text = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+                .format(Date(note.timestamp))
+
 
             holder.playButton.setOnClickListener {
                 note.audioPath?.let { path ->
                     audioPlayerManager.play(path)
                 }
             }
-
 
             holder.deleteButton.setOnClickListener {
                 // Usuń wpis z bazy
@@ -85,6 +89,7 @@ class UnifiedNoteAdapter(
                     if (file.exists()) file.delete()
                 }
             }
+            holder.title.text = note.title.ifBlank { note.content.take(30) }
 
             holder.itemView.setOnClickListener { onClick(note) }
         }
@@ -98,15 +103,18 @@ class UnifiedNoteAdapter(
     }
 
     class TextNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val content: TextView = itemView.findViewById(R.id.noteContent)
+        //val content: TextView = itemView.findViewById(R.id.noteContent)
         val timestamp: TextView = itemView.findViewById(R.id.noteTimestamp)
         val shareButton: Button = itemView.findViewById(R.id.btnShareNote)
         val deleteButton: Button = itemView.findViewById(R.id.btnDeleteNote)
+
+        val title: TextView = itemView.findViewById(R.id.noteTitle)
     }
 
     class AudioNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val fileName: TextView = itemView.findViewById(R.id.audioFileName)
         val playButton: Button = itemView.findViewById(R.id.btnPlayAudio)
         val deleteButton: Button = itemView.findViewById(R.id.btnDeleteAudio)
+        val title: TextView = itemView.findViewById(R.id.noteTitle)
+        val timestamp: TextView = itemView.findViewById(R.id.noteTimestamp)
     }
 }

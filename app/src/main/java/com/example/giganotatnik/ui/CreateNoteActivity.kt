@@ -11,6 +11,9 @@ import com.example.giganotatnik.audio.AudioRecorderManager
 import com.example.giganotatnik.notifications.NotificationHelper
 import com.example.giganotatnik.sensors.LightSensorManager
 import com.example.giganotatnik.speech.SpeechRecognitionManager
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class CreateNoteActivity : AppCompatActivity() {
 
@@ -44,6 +47,8 @@ class CreateNoteActivity : AppCompatActivity() {
         val recordButton = findViewById<Button>(R.id.btnRecord)
         val speechButton = findViewById<Button>(R.id.btnSpeechToText)
         val backButton = findViewById<Button>(R.id.btnBackToMain)
+        val titleEditText = findViewById<EditText>(R.id.editTextTitle)
+
         backButton.setOnClickListener {
             finish() // zamyka CreateNoteActivity i wraca do MainActivity
         }
@@ -61,25 +66,33 @@ class CreateNoteActivity : AppCompatActivity() {
             } else {
                 val file = recorderManager.stopRecording()
                 if (file != null) {
-                    // Zapis do bazy jako notatka audio
+                    val userTitle = titleEditText.text.toString()
+                    val timestamp = System.currentTimeMillis()
+                    val formattedDate = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(Date(timestamp))
+                    val finalTitle = if (userTitle.isBlank()) "Nagranie z $formattedDate" else userTitle
+
                     viewModel.addAudioNote(
-                        title = file.name,
+                        title = finalTitle,
                         audioPath = file.absolutePath
                     )
-                    notificationHelper.show(getString(R.string.audio_saved), file.name)
+
+                    notificationHelper.show(getString(R.string.audio_saved), finalTitle)
+                    titleEditText.text.clear()
                 }
                 recordButton.text = getString(R.string.record_note)
             }
             isRecording = !isRecording
         }
 
-
         // Zapis notatki tekstowej
         saveButton.setOnClickListener {
+            val title = titleEditText.text.toString()
             val text = noteEditText.text.toString()
+
             if (text.isNotBlank()) {
-                viewModel.addNote(text)
-                notificationHelper.show(getString(R.string.note_saved), text)
+                viewModel.addNote(title, text)
+                notificationHelper.show(getString(R.string.note_saved), title.ifBlank { text.take(20) })
+                titleEditText.text.clear()
                 noteEditText.text.clear()
             }
         }
