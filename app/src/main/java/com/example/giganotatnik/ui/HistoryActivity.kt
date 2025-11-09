@@ -1,5 +1,6 @@
 package com.example.giganotatnik.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.SearchView
@@ -65,7 +66,9 @@ class HistoryActivity : AppCompatActivity() {
                 viewModel.deleteNote(note)
             },
             onClick = { note ->
-                Toast.makeText(this, "Kliknięto: ${note.title}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, NoteDetailActivity::class.java)
+                intent.putExtra("note", note)
+                startActivity(intent)
             },
             audioPlayerManager = audioPlayerManager // przekazanie managera
         )
@@ -82,4 +85,5 @@ class HistoryActivity : AppCompatActivity() {
             finish()
         }
     }
+
 }

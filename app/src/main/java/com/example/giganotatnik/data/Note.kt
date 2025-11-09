@@ -2,6 +2,7 @@ package com.example.giganotatnik.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "notes")
 data class Note(
@@ -10,8 +11,10 @@ data class Note(
     val content: String = "",
     val timestamp: Long = System.currentTimeMillis(),
     val type: NoteType = NoteType.TEXT,            // TEXT lub AUDIO
-    val audioPath: String? = null                  // null dla tekstowych
-)
+    val audioPath: String? = null,                 // null dla tekstowych
+    val latitude: Double? = null,
+    val longitude: Double? = null
+): Serializable
 
 enum class NoteType {
     TEXT,

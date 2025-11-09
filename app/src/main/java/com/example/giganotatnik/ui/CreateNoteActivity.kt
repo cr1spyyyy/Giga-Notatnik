@@ -1,16 +1,22 @@
 package com.example.giganotatnik.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.giganotatnik.R
 import com.example.giganotatnik.audio.AudioRecorderManager
 import com.example.giganotatnik.notifications.NotificationHelper
 import com.example.giganotatnik.sensors.LightSensorManager
 import com.example.giganotatnik.speech.SpeechRecognitionManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -22,6 +28,7 @@ class CreateNoteActivity : AppCompatActivity() {
     private lateinit var speechManager: SpeechRecognitionManager
     private lateinit var lightManager: LightSensorManager
     private lateinit var notificationHelper: NotificationHelper
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private var isRecording = false
 
@@ -29,15 +36,14 @@ class CreateNoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_note)
 
-        // Inicjalizacja logiki
         viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
         recorderManager = AudioRecorderManager(this)
         speechManager = SpeechRecognitionManager(this)
         lightManager = LightSensorManager(this)
         notificationHelper = NotificationHelper(this)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         lightManager.start()
-
         setupUI()
     }
 
@@ -49,16 +55,12 @@ class CreateNoteActivity : AppCompatActivity() {
         val backButton = findViewById<Button>(R.id.btnBackToMain)
         val titleEditText = findViewById<EditText>(R.id.editTextTitle)
 
-        backButton.setOnClickListener {
-            finish() // zamyka CreateNoteActivity i wraca do MainActivity
-        }
+        backButton.setOnClickListener { finish() }
 
-        // Rozpoznawanie mowy
         speechButton.setOnClickListener {
             speechManager.startListening { text -> noteEditText.setText(text) }
         }
 
-// Nagrywanie audio
         recordButton.setOnClickListener {
             if (!isRecording) {
                 recorderManager.startRecording()
@@ -71,30 +73,75 @@ class CreateNoteActivity : AppCompatActivity() {
                     val formattedDate = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(Date(timestamp))
                     val finalTitle = if (userTitle.isBlank()) "Nagranie z $formattedDate" else userTitle
 
-                    viewModel.addAudioNote(
-                        title = finalTitle,
-                        audioPath = file.absolutePath
-                    )
-
-                    notificationHelper.show(getString(R.string.audio_saved), finalTitle)
-                    titleEditText.text.clear()
+                    getCurrentLocation { location ->
+                        viewModel.addAudioNote(
+                            title = finalTitle,
+                            audioPath = file.absolutePath,
+                            latitude = location?.latitude,
+                            longitude = location?.longitude
+                        )
+                        notificationHelper.show(getString(R.string.audio_saved), finalTitle)
+                        titleEditText.text.clear()
+                    }
                 }
                 recordButton.text = getString(R.string.record_note)
             }
             isRecording = !isRecording
         }
 
-        // Zapis notatki tekstowej
         saveButton.setOnClickListener {
             val title = titleEditText.text.toString()
             val text = noteEditText.text.toString()
 
             if (text.isNotBlank()) {
-                viewModel.addNote(title, text)
-                notificationHelper.show(getString(R.string.note_saved), title.ifBlank { text.take(20) })
-                titleEditText.text.clear()
-                noteEditText.text.clear()
+                getCurrentLocation { location ->
+                    viewModel.addNote(
+                        title = title,
+                        content = text,
+                        latitude = location?.latitude,
+                        longitude = location?.longitude
+                    )
+                    notificationHelper.show(getString(R.string.note_saved), title.ifBlank { text.take(20) })
+                    titleEditText.text.clear()
+                    noteEditText.text.clear()
+                }
             }
+        }
+    }
+
+    private fun getCurrentLocation(onLocationReady: (Location?) -> Unit) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                100
+            )
+            onLocationReady(null)
+            return
+        }
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            onLocationReady(location)
+        }.addOnFailureListener {
+            onLocationReady(null)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 100 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Uprawnienia lokalizacji przyznane", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Brak uprawnień do lokalizacji", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -102,5 +149,4 @@ class CreateNoteActivity : AppCompatActivity() {
         super.onDestroy()
         lightManager.stop()
     }
-
 }

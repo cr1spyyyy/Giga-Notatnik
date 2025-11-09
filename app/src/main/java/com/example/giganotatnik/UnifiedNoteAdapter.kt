@@ -112,9 +112,11 @@ class UnifiedNoteAdapter(
     }
 
     class AudioNoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val playButton: Button = itemView.findViewById(R.id.btnPlayAudio)
+        val playButton: Button = requireNotNull(itemView.findViewById(R.id.btnPlayAudio)) { "btnPlayAudio not found" }
+
         val deleteButton: Button = itemView.findViewById(R.id.btnDeleteAudio)
         val title: TextView = itemView.findViewById(R.id.noteTitle)
         val timestamp: TextView = itemView.findViewById(R.id.noteTimestamp)
+
     }
 }

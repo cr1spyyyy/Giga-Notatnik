@@ -13,24 +13,33 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     private val dao = NoteDatabase.getDatabase(application).noteDao()
     val allNotes: LiveData<List<Note>> = dao.getAllNotes()
 
-    fun addNote(title: String, content: String) {
+    fun addNote( title: String,
+                 content: String,
+                 latitude: Double? = null,
+                 longitude: Double? = null) {
         viewModelScope.launch {
             val note = Note(
                 title = title,
                 content = content,
-                type = NoteType.TEXT
+                latitude = latitude,
+                longitude = longitude
             )
             dao.insertNote(note)
         }
     }
 
-    fun addAudioNote(title: String, audioPath: String) {
+    fun addAudioNote( title: String,
+                      audioPath: String,
+                      latitude: Double? = null,
+                      longitude: Double? = null) {
         viewModelScope.launch {
             val note = Note(
                 title = title,
                 content = "",
+                audioPath = audioPath,
                 type = NoteType.AUDIO,
-                audioPath = audioPath
+                latitude = latitude,
+                longitude = longitude
             )
             dao.insertNote(note)
         }
