@@ -50,4 +50,10 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             dao.deleteNote(note)
         }
     }
+    fun updateNote(note: Note) {
+        viewModelScope.launch {
+            dao.update(note)
+        }
+    }
+
 }
