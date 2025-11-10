@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.giganotatnik.R
@@ -42,7 +43,12 @@ class CreateNoteActivity : AppCompatActivity() {
         lightManager = LightSensorManager(this)
         notificationHelper = NotificationHelper(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        val toolbar = findViewById<Toolbar>(R.id.createNoteToolbar)
+        setSupportActionBar(toolbar)
 
+        // Włącz strzałkę "wstecz"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
         lightManager.start()
         setupUI()
     }
@@ -52,10 +58,8 @@ class CreateNoteActivity : AppCompatActivity() {
         val saveButton = findViewById<Button>(R.id.btnSaveText)
         val recordButton = findViewById<Button>(R.id.btnRecord)
         val speechButton = findViewById<Button>(R.id.btnSpeechToText)
-        val backButton = findViewById<Button>(R.id.btnBackToMain)
         val titleEditText = findViewById<EditText>(R.id.editTextTitle)
 
-        backButton.setOnClickListener { finish() }
 
         speechButton.setOnClickListener {
             speechManager.startListening { text -> noteEditText.setText(text) }
@@ -148,5 +152,9 @@ class CreateNoteActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         lightManager.stop()
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        finish() // wraca do poprzedniego ekranu (np. lista notatek)
+        return true
     }
 }

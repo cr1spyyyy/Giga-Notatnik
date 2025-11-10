@@ -1,14 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#263238"
-    android:padding="24dp">
+    android:background="#263238">
 
+    <!-- Jeden kontener wewnątrz ScrollView -->
     <LinearLayout
         android:orientation="vertical"
+        android:padding="24dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <!-- Toolbar z tytułem i strzałką -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/createNoteToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#37474F"
+            android:title="@string/app_title"
+            android:titleTextColor="#FFFFFF"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         <!-- Pole tytułu notatki -->
         <EditText
@@ -16,6 +27,7 @@
             style="@style/AppEditText"
             android:hint="@string/note_title_hint"
             android:inputType="textCapSentences"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -31,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+        <!-- Przyciski akcji -->
         <Button
             android:id="@+id/btnSaveText"
             style="@style/AppButton"
@@ -48,11 +61,5 @@
             style="@style/AppButton"
             android:text="@string/speech_to_text"
             android:layout_marginBottom="12dp"/>
-
-        <Button
-            android:id="@+id/btnBackToMain"
-            style="@style/AppButton"
-            android:text="@string/back_to_main"
-            android:layout_marginTop="24dp"/>
     </LinearLayout>
 </ScrollView>

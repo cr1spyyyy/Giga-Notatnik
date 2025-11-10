@@ -8,83 +8,100 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:orientation="vertical">
 
-        <!-- Tytuł edytowalny -->
-        <EditText
-            android:id="@+id/noteTitle"
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/noteToolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:hint="Tytuł notatki"
-            android:textSize="22sp"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#B0BEC5"
-            android:textStyle="bold"
-            android:background="@android:color/transparent"
-            android:layout_marginBottom="12dp" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="#37474F"
+            android:title="Szczegóły notatki"
+            android:titleTextColor="#FFFFFF"
+            android:layout_marginBottom="15dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <!-- Data -->
-        <TextView
-            android:id="@+id/noteTimestamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="08.11.2025 22:33"
-            android:textSize="14sp"
-            android:textColor="#B0BEC5"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Treść edytowalna -->
-        <EditText
-            android:id="@+id/noteContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Treść notatki"
-            android:minLines="3"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:textColor="#ECEFF1"
-            android:textColorHint="#90A4AE"
-            android:background="@drawable/edittext_background_edit_text"
-
-            android:layout_marginBottom="32dp" />
-
-        <!-- Przyciski w kolumnie -->
+        <!-- Pozostałe elementy -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <Button
-                android:id="@+id/btnPlayAudio"
-                android:layout_width="wrap_content"
+            <!-- Tytuł -->
+            <EditText
+                android:id="@+id/noteTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Odtwórz audio"
-                android:visibility="gone"
-                android:backgroundTint="#546E7A"
+                android:gravity="center"
+                android:hint="Tytuł notatki"
+                android:textSize="22sp"
                 android:textColor="#FFFFFF"
+                android:textColorHint="#B0BEC5"
+                android:textStyle="bold"
+                android:background="@android:color/transparent"
                 android:layout_marginBottom="12dp" />
 
-            <Button
-                android:id="@+id/btnOpenLocation"
+            <!-- Data -->
+            <TextView
+                android:id="@+id/noteTimestamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pokaż lokalizację"
-                android:visibility="gone"
-                android:backgroundTint="#546E7A"
-                android:textColor="#FFFFFF" />
-            <Button
-                android:id="@+id/btnSaveChanges"
-                android:layout_width="wrap_content"
+                android:text="08.11.2025 22:33"
+                android:textSize="14sp"
+                android:textColor="#B0BEC5"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Treść -->
+            <EditText
+                android:id="@+id/noteContent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Zapisz zmiany"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="#4CAF50"
-                android:textColor="#FFFFFF" />
+                android:hint="Treść notatki"
+                android:minLines="3"
+                android:gravity="top|center_horizontal"
+                android:textSize="16sp"
+                android:textColor="#ECEFF1"
+                android:textColorHint="#90A4AE"
+                android:background="@drawable/edittext_background_edit_text"
+                android:layout_marginBottom="32dp" />
 
+            <!-- Przyciski -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
 
+                <Button
+                    android:id="@+id/btnPlayAudio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Odtwórz audio"
+                    android:visibility="gone"
+                    android:backgroundTint="#546E7A"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginBottom="12dp" />
+
+                <Button
+                    android:id="@+id/btnOpenLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pokaż lokalizację"
+                    android:visibility="gone"
+                    android:backgroundTint="#546E7A"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btnSaveChanges"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Zapisz zmiany"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="#4CAF50"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

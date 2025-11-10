@@ -5,24 +5,31 @@
     android:background="#263238"
     android:padding="24dp">
 
+    <!-- Toolbar z ikoną strzałki -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/mainToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#37474F"
+        android:title="@string/app_name"
+        android:titleTextColor="#FFFFFF"
+        android:layout_marginBottom="30dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!-- Pole wyszukiwania -->
     <SearchView
         android:id="@+id/searchView"
         style="@style/AppSearchView"
         android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btnBackToMain"
-        style="@style/AppButton"
-        android:text="@string/back_to_main"
-        android:layout_marginBottom="16dp"/>
-
+    <!-- Lista notatek -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/unifiedRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginBottom="12dp"/>
+        android:layout_marginBottom="12dp" />
 
 </LinearLayout>

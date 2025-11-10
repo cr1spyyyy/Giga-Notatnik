@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.example.giganotatnik.R
 import com.example.giganotatnik.audio.AudioPlayerManager
@@ -37,6 +38,7 @@ class NoteDetailActivity : AppCompatActivity() {
         val playButton = findViewById<Button>(R.id.btnPlayAudio)
         val locationButton = findViewById<Button>(R.id.btnOpenLocation)
         val saveButton = findViewById<Button>(R.id.btnSaveChanges)
+        val toolbar = findViewById<Toolbar>(R.id.noteToolbar)
         saveButton.visibility = View.GONE
 
         // Pobierz notatkę z Intentu
@@ -91,12 +93,20 @@ class NoteDetailActivity : AppCompatActivity() {
             Toast.makeText(this, "Zapisano zmiany", Toast.LENGTH_SHORT).show()
             finish()
         }
-
         // Nasłuchiwanie zmian
         titleView.addTextChangedListener(createWatcher(titleView, contentView, saveButton))
         if (!isAudioNote) {
             contentView.addTextChangedListener(createWatcher(titleView, contentView, saveButton))
         }
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     private fun createWatcher(

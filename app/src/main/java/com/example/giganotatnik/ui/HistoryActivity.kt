@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +24,11 @@ class HistoryActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
         audioPlayerManager = AudioPlayerManager(this)
+
+        val toolbar = findViewById<Toolbar>(R.id.mainToolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         setupRecyclerView()
         setupUI()
@@ -80,10 +85,10 @@ class HistoryActivity : AppCompatActivity() {
             unifiedAdapter.updateNotes(notes)
         }
 
-        val backButton = findViewById<Button>(R.id.btnBackToMain)
-        backButton.setOnClickListener {
-            finish()
-        }
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        finish() // wraca do poprzedniego ekranu
+        return true
     }
 
 }
