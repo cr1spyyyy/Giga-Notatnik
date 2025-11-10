@@ -26,7 +26,7 @@
 
     <!-- Styl dla EditText -->
     <style name="AppEditText" parent="Widget.MaterialComponents.TextInputEditText.FilledBox">
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">@color/search_text_black</item>
         <item name="android:textColorHint">?attr/colorPrimary</item>
         <item name="android:padding">12dp</item>
         <item name="android:textSize">16sp</item>
@@ -37,8 +37,8 @@
     <style name="AppSearchView" parent="Widget.AppCompat.SearchView">
         <item name="android:queryHint">@string/search_notes</item>
         <item name="android:iconifiedByDefault">false</item>
+        <item name="android:textColor">@color/search_text_black</item>
         <item name="android:textColorHint">?attr/colorPrimary</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:background">@drawable/edittext_background</item>
     </style>
 

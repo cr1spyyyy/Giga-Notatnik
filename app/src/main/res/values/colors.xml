@@ -2,7 +2,6 @@
 <resources>
     <!-- Kolory dla jasnego motywu -->
     <color name="background">#E0E0E0</color>
-    <color name="surface">#D6D6D6</color>
 
     <color name="primary">#3A7F74</color>
     <color name="primaryVariant">#00BFFF</color>
@@ -14,6 +13,8 @@
     <color name="textPrimary">#111111</color>
     <color name="textSecondary">#546E7A</color>
     <color name="text_on_button">#FFFFFF</color>
+    <color name="search_text_black">#000000</color>
+
 </resources>
 
 
