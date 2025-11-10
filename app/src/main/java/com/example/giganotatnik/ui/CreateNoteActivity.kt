@@ -3,13 +3,17 @@ package com.example.giganotatnik.ui
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import com.example.giganotatnik.R
 import com.example.giganotatnik.notifications.NotificationHelper
@@ -17,6 +21,7 @@ import com.example.giganotatnik.sensors.LightSensorManager
 import com.example.giganotatnik.speech.SpeechRecognitionManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import java.io.File
 
 class CreateNoteActivity : AppCompatActivity() {
 
@@ -25,6 +30,11 @@ class CreateNoteActivity : AppCompatActivity() {
     private lateinit var lightManager: LightSensorManager
     private lateinit var notificationHelper: NotificationHelper
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private lateinit var takePictureLauncher: ActivityResultLauncher<Uri>
+
+    private var photoUri: Uri? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +52,21 @@ class CreateNoteActivity : AppCompatActivity() {
         // Włącz strzałkę "wstecz"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success && photoUri != null) {
+                getCurrentLocation { location ->
+                    viewModel.addPhotoNote(
+                        title = findViewById<EditText>(R.id.editTextTitle).text.toString(),
+                        content = findViewById<EditText>(R.id.editTextNote).text.toString(),
+                        photoPath = photoUri.toString(),
+                        latitude = location?.latitude,
+                        longitude = location?.longitude
+                    )
+                    notificationHelper.show(getString(R.string.note_saved), "Zdjęcie zapisane")
+                }
+            }
+        }
 
         lightManager.start()
         setupUI()
@@ -80,6 +105,31 @@ class CreateNoteActivity : AppCompatActivity() {
                 }
             }
         }
+
+        val photoButton = findViewById<Button>(R.id.btnTakePhoto)
+        photoButton.setOnClickListener {
+            val photoFile = File.createTempFile("note_photo_", ".jpg", cacheDir)
+            photoUri = FileProvider.getUriForFile(this, "${packageName}.provider", photoFile)
+
+            photoUri?.let { uri ->
+                val fileName = photoFile.name
+                val title = findViewById<EditText>(R.id.editTextTitle).text.toString().ifBlank { fileName }
+
+                takePictureLauncher.launch(uri)
+
+                // w callbacku takePictureLauncher:
+                getCurrentLocation { location ->
+                    viewModel.addPhotoNote(
+                        title = title,
+                        content = findViewById<EditText>(R.id.editTextNote).text.toString(),
+                        photoPath = uri.toString(),
+                        latitude = location?.latitude,
+                        longitude = location?.longitude
+                    )
+                }
+            }
+        }
+
     }
 
     private fun getCurrentLocation(onLocationReady: (Location?) -> Unit) {

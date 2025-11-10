@@ -44,6 +44,25 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             dao.insertNote(note)
         }
     }
+    fun addPhotoNote(
+        title: String,
+        content: String = "",
+        photoPath: String,
+        latitude: Double? = null,
+        longitude: Double? = null
+    ) {
+        viewModelScope.launch {
+            val note = Note(
+                title = title,
+                content = content,
+                photoPath = photoPath,
+                type = NoteType.PHOTO,
+                latitude = latitude,
+                longitude = longitude
+            )
+            dao.insertNote(note)
+        }
+    }
 
     fun deleteNote(note: Note) {
         viewModelScope.launch {

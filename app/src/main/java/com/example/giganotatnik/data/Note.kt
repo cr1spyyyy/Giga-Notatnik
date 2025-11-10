@@ -12,11 +12,13 @@ data class Note(
     val timestamp: Long = System.currentTimeMillis(),
     val type: NoteType = NoteType.TEXT,            // TEXT lub AUDIO
     val audioPath: String? = null,                 // null dla tekstowych
+    val photoPath: String? = null,
     val latitude: Double? = null,
     val longitude: Double? = null
 ): Serializable
 
 enum class NoteType {
     TEXT,
-    AUDIO
+    AUDIO,
+    PHOTO
 }
