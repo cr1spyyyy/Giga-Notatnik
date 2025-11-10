@@ -28,22 +28,27 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun addAudioNote( title: String,
-                      audioPath: String,
-                      latitude: Double? = null,
-                      longitude: Double? = null) {
+    fun addAudioNote(
+        title: String,
+        audioPath: String,
+        latitude: Double? = null,
+        longitude: Double? = null,
+        photoPath: String? = null
+    ) {
+        val note = Note(
+            title = title,
+            content = "",
+            type = NoteType.AUDIO,
+            audioPath = audioPath,
+            photoPath = photoPath,
+            latitude = latitude,
+            longitude = longitude
+        )
         viewModelScope.launch {
-            val note = Note(
-                title = title,
-                content = "",
-                audioPath = audioPath,
-                type = NoteType.AUDIO,
-                latitude = latitude,
-                longitude = longitude
-            )
             dao.insertNote(note)
         }
     }
+
     fun addPhotoNote(
         title: String,
         content: String = "",

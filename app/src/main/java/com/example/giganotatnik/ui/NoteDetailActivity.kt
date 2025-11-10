@@ -58,8 +58,6 @@ class NoteDetailActivity : AppCompatActivity() {
         lightManager.start()
         saveButton.visibility = View.GONE
 
-
-
         // Pobierz notatkę z Intentu
         val note = intent.getSerializableExtra("note") as? Note ?: return
         isAudioNote = note.audioPath != null

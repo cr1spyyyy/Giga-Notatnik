@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#263238">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Toolbar -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/createNoteToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#37474F"
+            android:title="@string/app_title"
+            android:titleTextColor="#FFFFFF"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <!-- Tytuł notatki -->
+        <EditText
+            android:id="@+id/editTextAudioTitle"
+            style="@style/AppEditText"
+            android:hint="@string/note_title_hint"
+            android:inputType="textCapSentences"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Przycisk nagrywania -->
+        <Button
+            android:id="@+id/btnStartRecording"
+            style="@style/AppButton"
+            android:text="@string/record_note"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnTakePhotoAudio"
+            style="@style/AppButton"
+            android:text="@string/take_photo"
+            android:layout_marginBottom="12dp" />
+
+    </LinearLayout>
+</ScrollView>

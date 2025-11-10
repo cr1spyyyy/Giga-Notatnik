@@ -6,14 +6,15 @@
 
     <!-- Ekran główny -->
     <string name="new_note">Nowa notatka tekstowa</string>
+    <string name="audio_note">Nowa notatka głosowa</string>
     <string name="note_history">Historia notatek</string>
     <string name="back_to_main">Powrót do strony głównej"</string>
 
     <!-- Tworzenie notatki -->
     <string name="note_hint">Wpisz notatkę tekstową</string>
     <string name="save_text_note">Zapisz notatkę tekstową</string>
-    <string name="record_note">Kliknij, aby zacząć nagrywać nową notatkę głosową</string>
-    <string name="stop_recording">Zatrzymaj nagrywanie</string>
+    <string name="record_note">Nagraj notatkę głosową</string>
+    <string name="stop_recording">Wstrzymaj nagrywanie</string>
     <string name="speech_to_text">Rozpoznaj mowę</string>
     <string name="share_sms">Udostępnij przez SMS</string>
     <string name="note_saved">Zapisano notatkę</string>
