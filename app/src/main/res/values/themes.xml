@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Główna definicja motywu aplikacji -->
-    <style name="Theme.GigaNotatnik" parent="Theme.Material3.Light.NoActionBar">
-        <item name="android:windowBackground">@color/background_light</item>
-        <item name="colorPrimary">@color/primary_light</item>
-        <item name="colorSecondary">@color/primary_teal_light</item>
-        <item name="colorOnPrimary">@color/text_on_button_light</item>
-        <item name="colorSurface">@color/surface_light</item>
-        <item name="colorOnSurface">@color/text_primary_light</item>
-    </style>
-
-    <style name="Theme.GigaNotatnik.Dark" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="android:windowBackground">@color/background_dark</item>
-        <item name="colorPrimary">@color/primary_dark</item>
-        <item name="colorSecondary">@color/primary_teal_dark</item>
-        <item name="colorOnPrimary">@color/text_on_button_dark</item>
-        <item name="colorSurface">@color/surface_dark</item>
-        <item name="colorOnSurface">@color/text_primary_dark</item>
+    <!-- Adaptacyjny motyw aplikacji -->
+    <style name="Theme.GigaNotatnik" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/background</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primaryVariant</item>
+        <item name="colorSecondary">@color/primary_teal</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/textPrimary</item>
+        <item name="colorOnPrimary">@color/text_on_button</item>
     </style>
 
     <!-- Styl dla przycisków -->

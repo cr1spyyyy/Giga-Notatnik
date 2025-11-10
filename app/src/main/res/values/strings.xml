@@ -5,14 +5,14 @@
     <string name="app_title">Moje notatki</string>
 
     <!-- Ekran główny -->
-    <string name="new_note">Nowa notatka</string>
+    <string name="new_note">Nowa notatka tekstowa</string>
     <string name="note_history">Historia notatek</string>
     <string name="back_to_main">Powrót do strony głównej"</string>
 
     <!-- Tworzenie notatki -->
     <string name="note_hint">Wpisz notatkę tekstową</string>
     <string name="save_text_note">Zapisz notatkę tekstową</string>
-    <string name="record_note">Nagraj notatkę głosową</string>
+    <string name="record_note">Kliknij, aby zacząć nagrywać nową notatkę głosową</string>
     <string name="stop_recording">Zatrzymaj nagrywanie</string>
     <string name="speech_to_text">Rozpoznaj mowę</string>
     <string name="share_sms">Udostępnij przez SMS</string>
@@ -32,4 +32,13 @@
     <string name="play_audio">Odtwórz</string>
     <string name="delete_audio">Usuń</string>
     <string name="audio_file_example">note_20231107_1824.3gp</string>
+    <string name="NoteTitle">Tytuł notatki</string>
+    <string name="CreateDate">Data utworzenia</string>
+    <string name="ShareTxt">Udostępnij</string>
+    <string name="DeleteStr">Usuń</string>
+    <string name="ExampleCreateDate">08.11.2025 22:33</string>
+    <string name="PlayStr">Odtwórz</string>
+    <string name="NoteDetailsStr">Szczegóły notatki</string>
+    <string name="ShowLocalizationStr">Pokaż lokalizację</string>
+    <string name="SaveChangesStr">Zapisz zmiany</string>
 </resources>

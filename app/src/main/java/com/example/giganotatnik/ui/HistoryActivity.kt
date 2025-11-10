@@ -2,7 +2,6 @@ package com.example.giganotatnik.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -11,12 +10,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.giganotatnik.R
 import com.example.giganotatnik.audio.AudioPlayerManager
+import com.example.giganotatnik.sensors.LightSensorManager
 
 class HistoryActivity : AppCompatActivity() {
 
     private lateinit var viewModel: NoteViewModel
     private lateinit var unifiedAdapter: UnifiedNoteAdapter
     private lateinit var audioPlayerManager: AudioPlayerManager
+    private lateinit var lightManager: LightSensorManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +25,8 @@ class HistoryActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
         audioPlayerManager = AudioPlayerManager(this)
-
+        lightManager = LightSensorManager(this)
+        lightManager.start()
         val toolbar = findViewById<Toolbar>(R.id.mainToolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

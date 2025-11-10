@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.giganotatnik.R
 import com.example.giganotatnik.audio.AudioPlayerManager
 import com.example.giganotatnik.data.Note
+import com.example.giganotatnik.sensors.LightSensorManager
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -25,6 +26,8 @@ class NoteDetailActivity : AppCompatActivity() {
     private lateinit var viewModel: NoteViewModel
     private lateinit var originalTitle: String
     private lateinit var originalContent: String
+
+    private lateinit var lightManager: LightSensorManager
     private var isAudioNote: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +42,9 @@ class NoteDetailActivity : AppCompatActivity() {
         val locationButton = findViewById<Button>(R.id.btnOpenLocation)
         val saveButton = findViewById<Button>(R.id.btnSaveChanges)
         val toolbar = findViewById<Toolbar>(R.id.noteToolbar)
+        lightManager = LightSensorManager(this)
+
+        lightManager.start()
         saveButton.visibility = View.GONE
 
         // Pobierz notatkę z Intentu

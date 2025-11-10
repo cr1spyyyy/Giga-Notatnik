@@ -50,11 +50,6 @@
             android:text="@string/save_text_note"
             android:layout_marginBottom="12dp"/>
 
-        <Button
-            android:id="@+id/btnRecord"
-            style="@style/AppButton"
-            android:text="@string/record_note"
-            android:layout_marginBottom="12dp"/>
 
         <Button
             android:id="@+id/btnSpeechToText"

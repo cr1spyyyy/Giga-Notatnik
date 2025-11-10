@@ -19,7 +19,7 @@
             android:id="@+id/noteTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tytuł notatki"
+            android:text="@string/NoteTitle"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -30,7 +30,7 @@
             android:id="@+id/noteTimestamp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Data utworzenia"
+            android:text="@string/CreateDate"
             android:textSize="12sp"
             android:textColor="#666666"
             android:layout_marginBottom="8dp" />
@@ -45,13 +45,13 @@
                 android:id="@+id/btnShareNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Udostępnij" />
+                android:text="@string/ShareTxt" />
 
             <Button
                 android:id="@+id/btnDeleteNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Usuń"
+                android:text="@string/DeleteStr"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
 

@@ -1,32 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--  Jasny motyw -->
+    <!-- Kolory dla jasnego motywu -->
+    <color name="background">#E0E0E0</color>
+    <color name="surface">#D6D6D6</color>
 
-    <color name="background_light">#E0E0E0</color>
-    <color name="surface_light">#D6D6D6</color>
-    <color name="primary_light">#3A7F74</color>
-    <color name="primary_mint_light">#5FA88C</color>
-    <color name="primary_teal_light">#2F6F63</color>
-    <color name="text_primary_light">#111111</color>
-    <color name="text_on_button_light">#FFFFFF</color>
+    <color name="primary">#3A7F74</color>
+    <color name="primaryVariant">#00BFFF</color>
+    <color name="accent">#00D4FF</color>
 
-    <!-- Ciemny motyw -->
-    <color name="background_dark">#121212</color>
-    <color name="surface_dark">#1E1E1E</color>
-    <color name="primary_dark">#80CBC4</color>
-    <color name="primary_mint_dark">#80CBC4</color>
-    <color name="primary_teal_dark">#4DB6AC</color>
-    <color name="text_primary_dark">#FFFFFF</color>
-    <color name="text_on_button_dark">#000000</color>
+    <color name="primary_mint">#5FA88C</color>
+    <color name="primary_teal">#2F6F63</color>
 
-    <color name="primary_mint">@color/primary_mint_light</color>
-    <color name="primary_teal">@color/primary_teal_light</color>
-    <color name="primary">@color/primary_light</color>
-    <color name="text_on_button">@color/text_on_button_light</color>
-    <color name="text_primary">@color/text_primary_light</color>
-    <color name="background">@color/background_light</color>
-    <color name="surface">@color/surface_light</color>
+    <color name="textPrimary">#111111</color>
+    <color name="textSecondary">#546E7A</color>
+    <color name="text_on_button">#FFFFFF</color>
 </resources>
+
 
 
 

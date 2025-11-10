@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Kolory dla ciemnego motywu -->
+    <color name="surface">#1E1E1E</color>
+
+    <color name="primary">#80CBC4</color>
+    <color name="primaryVariant">#0097A7</color>
+    <color name="accent">#00D4FF</color>
+
+    <color name="primary_mint">#80CBC4</color>
+    <color name="primary_teal">#4DB6AC</color>
+
+    <color name="textPrimary">#FFFFFF</color>
+    <color name="textSecondary">#B0BEC5</color>
+</resources>

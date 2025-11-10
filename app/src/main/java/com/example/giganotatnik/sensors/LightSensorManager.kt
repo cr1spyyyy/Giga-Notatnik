@@ -9,11 +9,13 @@ import androidx.appcompat.app.AppCompatDelegate
 
 class LightSensorManager(
     private val context: Context,
-    private val threshold: Float = 30f
+    private val thresholdDark: Float = 30f,
+    private val thresholdLight: Float = 100f
 ) : SensorEventListener {
 
     private val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     private val lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+    private var currentMode = AppCompatDelegate.getDefaultNightMode()
 
     fun start() {
         lightSensor?.let {
@@ -27,10 +29,16 @@ class LightSensorManager(
 
     override fun onSensorChanged(event: SensorEvent?) {
         val lux = event?.values?.firstOrNull() ?: return
-        val newMode = if (lux < threshold) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
 
-        if (AppCompatDelegate.getDefaultNightMode() != newMode) {
+        val newMode = when {
+            lux < thresholdDark -> AppCompatDelegate.MODE_NIGHT_YES
+            lux > thresholdLight -> AppCompatDelegate.MODE_NIGHT_NO
+            else -> currentMode
+        }
+
+        if (newMode != currentMode) {
             AppCompatDelegate.setDefaultNightMode(newMode)
+            currentMode = newMode
         }
     }
 
