@@ -38,11 +38,22 @@
             android:text="@string/record_note"
             android:layout_marginBottom="12dp" />
 
+        <!-- Przycisk robienia zdjęcia -->
         <Button
             android:id="@+id/btnTakePhotoAudio"
             style="@style/AppButton"
             android:text="@string/take_photo"
             android:layout_marginBottom="12dp" />
+
+        <!-- Podgląd zdjęcia -->
+        <ImageView
+            android:id="@+id/photoPreview"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:visibility="gone"
+            android:layout_marginTop="8dp" />
 
     </LinearLayout>
 </ScrollView>

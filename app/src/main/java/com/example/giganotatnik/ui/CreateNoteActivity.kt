@@ -5,8 +5,10 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,11 +32,10 @@ class CreateNoteActivity : AppCompatActivity() {
     private lateinit var lightManager: LightSensorManager
     private lateinit var notificationHelper: NotificationHelper
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
+    private lateinit var photoPreview: ImageView
     private lateinit var takePictureLauncher: ActivityResultLauncher<Uri>
 
     private var photoUri: Uri? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,20 +54,17 @@ class CreateNoteActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
+        photoPreview = findViewById(R.id.photoPreview)
+
+        // Obsługa robienia zdjęcia
         takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success && photoUri != null) {
-                getCurrentLocation { location ->
-                    viewModel.addPhotoNote(
-                        title = findViewById<EditText>(R.id.editTextTitle).text.toString(),
-                        content = findViewById<EditText>(R.id.editTextNote).text.toString(),
-                        photoPath = photoUri.toString(),
-                        latitude = location?.latitude,
-                        longitude = location?.longitude
-                    )
-                    notificationHelper.show(getString(R.string.note_saved), "Zdjęcie zapisane")
-                }
+                photoPreview.setImageURI(photoUri)
+                photoPreview.visibility = View.VISIBLE
+                Toast.makeText(this, "Zdjęcie zapisane", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         lightManager.start()
         setupUI()
@@ -76,7 +74,6 @@ class CreateNoteActivity : AppCompatActivity() {
         val noteEditText = findViewById<EditText>(R.id.editTextNote)
         val saveButton = findViewById<Button>(R.id.btnSaveText)
         val speechButton = findViewById<Button>(R.id.btnSpeechToText)
-        val titleEditText = findViewById<EditText>(R.id.editTextTitle)
 
         // Obsługa speech-to-text
         speechButton.setOnClickListener {
@@ -85,24 +82,30 @@ class CreateNoteActivity : AppCompatActivity() {
 
         // Obsługa zapisu notatki tekstowej
         saveButton.setOnClickListener {
-            val title = titleEditText.text.toString()
-            val text = noteEditText.text.toString()
+            val title = findViewById<EditText>(R.id.editTextTitle).text.toString()
+            val text = findViewById<EditText>(R.id.editTextNote).text.toString()
 
-            if (text.isNotBlank()) {
-                getCurrentLocation { location ->
+            getCurrentLocation { location ->
+                if (photoUri != null) {
+                    // jeśli zrobiono zdjęcie
+                    viewModel.addPhotoNote(
+                        title = title.ifBlank { File(photoUri!!.path!!).name },
+                        content = text,
+                        photoPath = photoUri.toString(),
+                        latitude = location?.latitude,
+                        longitude = location?.longitude
+                    )
+                } else {
+                    // zwykła notatka tekstowa
                     viewModel.addNote(
                         title = title,
                         content = text,
                         latitude = location?.latitude,
                         longitude = location?.longitude
                     )
-                    notificationHelper.show(
-                        getString(R.string.note_saved),
-                        title.ifBlank { text.take(20) }
-                    )
-                    titleEditText.text.clear()
-                    noteEditText.text.clear()
                 }
+                notificationHelper.show(getString(R.string.note_saved), title.ifBlank { text.take(20) })
+                finish()
             }
         }
 
@@ -110,26 +113,8 @@ class CreateNoteActivity : AppCompatActivity() {
         photoButton.setOnClickListener {
             val photoFile = File.createTempFile("note_photo_", ".jpg", cacheDir)
             photoUri = FileProvider.getUriForFile(this, "${packageName}.provider", photoFile)
-
-            photoUri?.let { uri ->
-                val fileName = photoFile.name
-                val title = findViewById<EditText>(R.id.editTextTitle).text.toString().ifBlank { fileName }
-
-                takePictureLauncher.launch(uri)
-
-                // w callbacku takePictureLauncher:
-                getCurrentLocation { location ->
-                    viewModel.addPhotoNote(
-                        title = title,
-                        content = findViewById<EditText>(R.id.editTextNote).text.toString(),
-                        photoPath = uri.toString(),
-                        latitude = location?.latitude,
-                        longitude = location?.longitude
-                    )
-                }
-            }
+            photoUri?.let { uri -> takePictureLauncher.launch(uri) }
         }
-
     }
 
     private fun getCurrentLocation(onLocationReady: (Location?) -> Unit) {

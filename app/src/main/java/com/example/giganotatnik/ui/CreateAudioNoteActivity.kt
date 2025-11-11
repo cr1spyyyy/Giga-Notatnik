@@ -5,8 +5,10 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -35,6 +37,7 @@ class CreateAudioNoteActivity : AppCompatActivity() {
     private lateinit var photoButton: Button
     private lateinit var titleField: EditText
 
+    private lateinit var photoPreview: ImageView
     private var isRecording = false
     private var photoUri: Uri? = null
     private lateinit var takePictureLauncher: ActivityResultLauncher<Uri>
@@ -89,6 +92,15 @@ class CreateAudioNoteActivity : AppCompatActivity() {
                 }
                 isRecording = false
                 recordButton.text = getString(R.string.record_note)
+            }
+        }
+        photoPreview = findViewById(R.id.photoPreview)
+
+        takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success && photoUri != null) {
+                Toast.makeText(this, "Zdjęcie zapisane", Toast.LENGTH_SHORT).show()
+                photoPreview.setImageURI(photoUri)
+                photoPreview.visibility = View.VISIBLE
             }
         }
 
