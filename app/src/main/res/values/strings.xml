@@ -43,4 +43,7 @@
     <string name="ShowLocalizationStr">Pokaż lokalizację</string>
     <string name="SaveChangesStr">Zapisz zmiany</string>
     <string name="take_photo">Zrób zdjęcie</string>
+
+    <!-- Usuwanie zdjecia-->
+    <string name="delete_photo">Unuń zdjęcie</string>
 </resources>

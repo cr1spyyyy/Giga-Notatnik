@@ -1,21 +1,20 @@
 package com.example.giganotatnik.ui
 
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import com.example.giganotatnik.R
 import com.example.giganotatnik.audio.AudioPlayerManager
@@ -25,7 +24,6 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import androidx.core.net.toUri
 
 class NoteDetailActivity : AppCompatActivity() {
 
@@ -52,8 +50,12 @@ class NoteDetailActivity : AppCompatActivity() {
         val locationButton = findViewById<Button>(R.id.btnOpenLocation)
         val saveButton = findViewById<Button>(R.id.btnSaveChanges)
         val toolbar = findViewById<Toolbar>(R.id.noteToolbar)
+        val photoContainer = findViewById<FrameLayout>(R.id.photoContainer)
         val photoView = findViewById<ImageView>(R.id.notePhoto)
+        val deletePhotoButton = findViewById<ImageButton>(R.id.btnDeletePhoto)
         val photoButton = findViewById<Button>(R.id.btnTakePhotoDetail)
+
+// przycisk X
 
         lightManager = LightSensorManager(this)
         lightManager.start()
@@ -76,41 +78,51 @@ class NoteDetailActivity : AppCompatActivity() {
 
         // Konfiguracja UI zależnie od typu
         if (isAudioNote) {
-            // Notatka audio: ukryj treść, pokaż przycisk odtwarzania
             contentView.visibility = View.GONE
             playButton.visibility = View.VISIBLE
             playButton.setOnClickListener { AudioPlayerManager(this).play(note.audioPath!!) }
 
-            // POKAŻ ZDJĘCIE JEŚLI ISTNIEJE
             if (!note.photoPath.isNullOrBlank()) {
                 photoView.setImageURI(note.photoPath.toUri())
                 photoView.visibility = View.VISIBLE
+                deletePhotoButton.visibility = View.VISIBLE
             } else {
                 photoView.visibility = View.GONE
+                deletePhotoButton.visibility = View.GONE
             }
 
         } else if (isPhotoNote) {
-            // Notatka ze zdjęciem: pokaż treść i zdjęcie
             contentView.visibility = View.VISIBLE
             playButton.visibility = View.GONE
 
             if (!note.photoPath.isNullOrBlank()) {
                 photoView.setImageURI(note.photoPath.toUri())
                 photoView.visibility = View.VISIBLE
+                deletePhotoButton.visibility = View.VISIBLE
             } else {
                 photoView.visibility = View.GONE
+                deletePhotoButton.visibility = View.GONE
             }
 
             contentView.setText(originalContent)
         } else {
-            // Notatka tekstowa
             contentView.setText(originalContent)
             contentView.visibility = View.VISIBLE
             playButton.visibility = View.GONE
             photoView.visibility = View.GONE
+            deletePhotoButton.visibility = View.GONE
         }
 
-        // Dodawanie zdjęcia z poziomu detali
+        // Pokazanie zdjęcia jeśli istnieje
+        if (!note.photoPath.isNullOrBlank()) {
+            photoView.setImageURI(note.photoPath.toUri())
+            photoContainer.visibility = View.VISIBLE
+            deletePhotoButton.visibility = View.VISIBLE
+        } else {
+            photoContainer.visibility = View.GONE
+        }
+
+        // Dodawanie zdjęcia
         takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success && photoUri != null) {
                 val updatedNote = note.copy(
@@ -121,7 +133,8 @@ class NoteDetailActivity : AppCompatActivity() {
                 viewModel.updateNote(updatedNote)
 
                 photoView.setImageURI(photoUri)
-                photoView.visibility = View.VISIBLE
+                photoContainer.visibility = View.VISIBLE
+                deletePhotoButton.visibility = View.VISIBLE
 
                 Toast.makeText(this, "Zdjęcie dodane do notatki", Toast.LENGTH_SHORT).show()
             }
@@ -131,6 +144,25 @@ class NoteDetailActivity : AppCompatActivity() {
             val photoFile = File.createTempFile("note_photo_", ".jpg", cacheDir)
             photoUri = FileProvider.getUriForFile(this, "${packageName}.provider", photoFile)
             photoUri?.let { uri -> takePictureLauncher.launch(uri) }
+        }
+
+        // Usuwanie zdjęcia
+        deletePhotoButton.setOnClickListener {
+            val updatedNote = note.copy(photoPath = null)
+            viewModel.updateNote(updatedNote)
+            photoContainer.visibility = View.GONE
+            Toast.makeText(this, "Zdjęcie usunięte", Toast.LENGTH_SHORT).show()
+        }
+
+        // Powiększanie zdjęcia
+        photoView.setOnClickListener {
+            if (!note.photoPath.isNullOrBlank()) {
+                val dialog = Dialog(this)
+                dialog.setContentView(R.layout.dialog_fullscreen_photo)
+                val fullImage = dialog.findViewById<ImageView>(R.id.fullscreenPhoto)
+                fullImage.setImageURI(note.photoPath.toUri())
+                dialog.show()
+            }
         }
 
         // Lokalizacja
@@ -171,6 +203,7 @@ class NoteDetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -202,7 +235,6 @@ class NoteDetailActivity : AppCompatActivity() {
     }
 
     private fun createDefaultPhotoTitle(uri: Uri): String {
-        // Bezpieczny tytuł gdy użytkownik nie podał własnego
         return "Zdjęcie ${SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(Date())}"
     }
 }
