@@ -14,6 +14,7 @@
     <color name="textSecondary">#546E7A</color>
     <color name="text_on_button">#FFFFFF</color>
     <color name="search_text_black">#000000</color>
+    <color name="teal_700">#018786</color>
 
 </resources>
 

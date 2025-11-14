@@ -46,4 +46,5 @@
 
     <!-- Usuwanie zdjecia-->
     <string name="delete_photo">Unuń zdjęcie</string>
+    <string name="toggle_theme">Tryb</string>
 </resources>

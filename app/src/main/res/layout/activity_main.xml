@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#263238"
@@ -31,4 +32,15 @@
         android:id="@+id/btnGoToHistory"
         style="@style/AppButton"
         android:text="@string/app_title" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/themeToggleFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/toggle_theme"
+        android:src="@drawable/ic_theme_auto"
+        app:backgroundTint="@color/teal_700" />
+
 </LinearLayout>

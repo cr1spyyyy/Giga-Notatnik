@@ -93,4 +93,13 @@ class HistoryActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (::lightManager.isInitialized) {
+            lightManager.stop()
+        }
+        if (::audioPlayerManager.isInitialized) {
+            audioPlayerManager.release()
+        }
+    }
 }

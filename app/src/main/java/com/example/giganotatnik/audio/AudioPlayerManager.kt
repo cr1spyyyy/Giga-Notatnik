@@ -39,4 +39,9 @@ class AudioPlayerManager(private val context: Context) {
         }
         mediaPlayer = null
     }
+
+    fun release(){
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
 }
