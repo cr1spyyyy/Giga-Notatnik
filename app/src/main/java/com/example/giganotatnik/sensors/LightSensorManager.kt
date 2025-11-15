@@ -17,7 +17,6 @@ class LightSensorManager(
     private val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
     private val lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
     private var currentMode = AppCompatDelegate.getDefaultNightMode()
-
     private var dialog: Dialog? = null
 
     fun start() {
@@ -31,7 +30,6 @@ class LightSensorManager(
         dialog?.dismiss()
         dialog = null
     }
-
 
     override fun onSensorChanged(event: SensorEvent?) {
         val lux = event?.values?.firstOrNull() ?: return
@@ -53,7 +51,6 @@ class LightSensorManager(
             AppCompatDelegate.setDefaultNightMode(newMode)
         }
     }
-
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 }

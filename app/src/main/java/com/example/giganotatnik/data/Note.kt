@@ -7,11 +7,11 @@ import java.io.Serializable
 @Entity(tableName = "notes")
 data class Note(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val title: String = "",                        // domyślnie = content
+    val title: String = "", // domyślnie = content
     val content: String = "",
     val timestamp: Long = System.currentTimeMillis(),
-    val type: NoteType = NoteType.TEXT,            // TEXT lub AUDIO
-    val audioPath: String? = null,                 // null dla tekstowych
+    val type: NoteType = NoteType.TEXT, // TEXT lub AUDIO
+    val audioPath: String? = null, // null dla tekstowych
     val photoPath: String? = null,
     val latitude: Double? = null,
     val longitude: Double? = null

@@ -32,11 +32,9 @@ class CreateAudioNoteActivity : AppCompatActivity() {
     private lateinit var notificationHelper: NotificationHelper
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var viewModel: NoteViewModel
-
     private lateinit var recordButton: Button
     private lateinit var photoButton: Button
     private lateinit var titleField: EditText
-
     private lateinit var photoPreview: ImageView
     private var isRecording = false
     private var photoUri: Uri? = null
@@ -65,7 +63,6 @@ class CreateAudioNoteActivity : AppCompatActivity() {
                 Toast.makeText(this, "Zdjęcie zapisane", Toast.LENGTH_SHORT).show()
             }
         }
-
         recordButton.setOnClickListener {
             if (!isRecording) {
                 recorderManager.startRecording()

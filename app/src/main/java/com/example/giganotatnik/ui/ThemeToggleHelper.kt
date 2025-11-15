@@ -50,7 +50,6 @@ class ThemeToggleHelper(
         }
     }
 
-
     private fun updateFabIcon(fab: FloatingActionButton, mode: Int) {
         when (mode) {
             AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> fab.setImageResource(R.drawable.ic_theme_auto)

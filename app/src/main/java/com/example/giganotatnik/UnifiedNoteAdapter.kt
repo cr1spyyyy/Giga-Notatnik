@@ -50,7 +50,6 @@ class UnifiedNoteAdapter(
 
         if (holder is TextNoteViewHolder) {
             // Tekstowa notatka
-           // holder.content.text = note.content
             holder.timestamp.text = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
                 .format(Date(note.timestamp))
 

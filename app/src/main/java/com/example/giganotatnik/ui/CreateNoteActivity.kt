@@ -65,7 +65,6 @@ class CreateNoteActivity : AppCompatActivity() {
             }
         }
 
-
         lightManager.start()
         setupUI()
     }

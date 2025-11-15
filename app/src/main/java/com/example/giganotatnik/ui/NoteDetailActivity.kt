@@ -55,8 +55,6 @@ class NoteDetailActivity : AppCompatActivity() {
         val deletePhotoButton = findViewById<ImageButton>(R.id.btnDeletePhoto)
         val photoButton = findViewById<Button>(R.id.btnTakePhotoDetail)
 
-// przycisk X
-
         lightManager = LightSensorManager(this)
         lightManager.start()
         saveButton.visibility = View.GONE
@@ -203,7 +201,6 @@ class NoteDetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
