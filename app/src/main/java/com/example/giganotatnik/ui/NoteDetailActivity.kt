@@ -1,12 +1,12 @@
 package com.example.giganotatnik.ui
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
@@ -146,11 +146,26 @@ class NoteDetailActivity : AppCompatActivity() {
 
         // Usuwanie zdjęcia
         deletePhotoButton.setOnClickListener {
-            val updatedNote = note.copy(photoPath = null)
-            viewModel.updateNote(updatedNote)
-            photoContainer.visibility = View.GONE
-            Toast.makeText(this, "Zdjęcie usunięte", Toast.LENGTH_SHORT).show()
+
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Usuwanie zdjęcia")
+            builder.setMessage("Czy na pewno chcesz usunąć to zdjęcie?")
+
+            // Przycisk USUŃ
+            builder.setPositiveButton("Usuń") { dialog, _ ->
+                val updatedNote = note.copy(photoPath = null)
+                viewModel.updateNote(updatedNote)
+                photoContainer.visibility = View.GONE
+                Toast.makeText(this, "Zdjęcie usunięte", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+            builder.setNegativeButton("Anuluj") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+            builder.create().show()
         }
+
 
         // Powiększanie zdjęcia
         photoView.setOnClickListener {
