@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Kolory dla jasnego motywu -->
-    <color name="background">#E0E0E0</color>
+    <color name="background">#e6e6e6</color>
+    <color name="surface">#FFFFFF</color>
 
     <color name="primary">#3A7F74</color>
-    <color name="primaryVariant">#00BFFF</color>
+    <color name="primaryVariant">#427964</color>
     <color name="accent">#00D4FF</color>
 
     <color name="primary_mint">#5FA88C</color>
     <color name="primary_teal">#2F6F63</color>
+    <color name="cardBackground">#FAFAFA</color>
+    <color name="note_button_background">#E0F2F1</color>
+    <color name="note_button_text">#2F6F63</color>
+    <color name="statusBarColor">#3A7F74</color> <!-- Twój wybrany kolor -->
 
     <color name="textPrimary">#111111</color>
     <color name="textSecondary">#546E7A</color>
-    <color name="text_on_button">#FFFFFF</color>
+    <color name="text_on_button">#347f78</color>
     <color name="search_text_black">#000000</color>
     <color name="teal_700">#018786</color>
 

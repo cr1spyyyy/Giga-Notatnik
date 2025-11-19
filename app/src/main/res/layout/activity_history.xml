@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#263238"
+    android:background="@color/background"
     android:padding="24dp">
 
     <!-- Toolbar z ikoną strzałki -->
@@ -10,9 +11,9 @@
         android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#37474F"
+        android:background="@color/primaryVariant"
         android:title="@string/app_name"
-        android:titleTextColor="#FFFFFF"
+        android:titleTextColor="@color/textPrimary"
         android:layout_marginBottom="30dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -33,3 +34,4 @@
         android:layout_marginBottom="12dp" />
 
 </LinearLayout>
+

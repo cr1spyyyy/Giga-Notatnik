@@ -2,9 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#263238">
+    android:background="@color/background">
 
-    <!-- Jeden kontener wewnątrz ScrollView -->
     <LinearLayout
         android:orientation="vertical"
         android:padding="24dp"
@@ -16,10 +15,11 @@
             android:id="@+id/createNoteToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#37474F"
+            android:background="@color/primaryVariant"
             android:title="@string/app_title"
-            android:titleTextColor="#FFFFFF"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            android:titleTextColor="@color/textPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:layout_marginBottom="16dp" />
 
         <!-- Pole tytułu notatki -->
         <EditText
@@ -30,7 +30,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <!-- Pole treści notatki -->
         <EditText
@@ -41,27 +41,29 @@
             android:inputType="textMultiLine"
             android:layout_marginBottom="24dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <!-- Przyciski akcji -->
         <Button
             android:id="@+id/btnSaveText"
+            android:textColor="@color/text_on_button"
             style="@style/AppButton"
             android:text="@string/save_text_note"
-            android:layout_marginBottom="12dp"/>
-
+            android:layout_marginBottom="12dp" />
 
         <Button
             android:id="@+id/btnSpeechToText"
+            android:textColor="@color/text_on_button"
             style="@style/AppButton"
             android:text="@string/speech_to_text"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp" />
 
         <Button
             android:id="@+id/btnTakePhoto"
+            android:textColor="@color/text_on_button"
             style="@style/AppButton"
             android:text="@string/take_photo"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="12dp" />
 
         <!-- Podgląd zdjęcia -->
         <HorizontalScrollView
@@ -75,7 +77,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" />
         </HorizontalScrollView>
-
 
     </LinearLayout>
 </ScrollView>

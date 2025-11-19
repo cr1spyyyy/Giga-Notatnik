@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Kolory dla ciemnego motywu -->
-    <color name="surface">#1E1E1E</color>
+    <color name="background">#263238</color> <!-- ciemny -->
+    <color name="surface">#121212</color> <!-- ciemna powierzchnia -->
 
     <color name="primary">#80CBC4</color>
-    <color name="primaryVariant">#0097A7</color>
+    <color name="primaryVariant">#37474F</color>
     <color name="accent">#00D4FF</color>
 
     <color name="primary_mint">#80CBC4</color>
     <color name="primary_teal">#4DB6AC</color>
+    <color name="text_on_button">#FFFFFF</color>
+    <color name="cardBackground">#37474F</color> <!-- grafitowy -->
+    <color name="statusBarColor">#3A7F74</color> <!-- Twój wybrany kolor -->
+
+    <color name="note_button_background">#004D40</color>
+    <color name="note_button_text">#FFFFFF</color>
 
     <color name="textPrimary">#FFFFFF</color>
     <color name="textSecondary">#B0BEC5</color>

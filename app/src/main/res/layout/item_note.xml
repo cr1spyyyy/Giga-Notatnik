@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@android:color/white"
+        android:background="@color/cardBackground"
         android:padding="12dp">
 
         <TextView
@@ -24,7 +24,7 @@
             android:text="@string/NoteTitle"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textColor="@color/textPrimary"
             android:layout_marginBottom="8dp"/>
 
         <TextView
@@ -33,23 +33,27 @@
             android:layout_height="wrap_content"
             android:text="@string/CreateDate"
             android:textSize="12sp"
-            android:textColor="#666666"
+            android:textColor="@color/textSecondary"
             android:layout_marginBottom="8dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:background="@color/cardBackground"
+
             android:gravity="end">
 
             <Button
                 android:id="@+id/btnShareNote"
+                style="@style/NoteActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ShareTxt" />
 
             <Button
                 android:id="@+id/btnDeleteNote"
+                style="@style/NoteActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/DeleteStr"

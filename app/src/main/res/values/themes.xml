@@ -4,6 +4,7 @@
     <!-- Adaptacyjny motyw aplikacji -->
     <style name="Theme.GigaNotatnik" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/statusBarColor</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primaryVariant</item>
         <item name="colorSecondary">@color/primary_teal</item>
@@ -11,6 +12,7 @@
         <item name="colorSurface">@color/surface</item>
         <item name="colorOnSurface">@color/textPrimary</item>
         <item name="colorOnPrimary">@color/text_on_button</item>
+
     </style>
 
     <!-- Styl dla przycisków -->
@@ -22,6 +24,11 @@
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:elevation">2dp</item>
+    </style>
+    <style name="NoteActionButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:backgroundTint">@color/note_button_background</item>
+        <item name="android:textColor">@color/note_button_text</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- Styl dla EditText -->

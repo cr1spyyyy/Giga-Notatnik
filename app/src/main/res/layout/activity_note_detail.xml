@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#263238"
+    android:background="@color/background"
     android:padding="16dp">
 
     <LinearLayout
@@ -16,9 +16,9 @@
             android:id="@+id/noteToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#37474F"
+            android:background="@color/primaryVariant"
             android:title="@string/NoteDetailsStr"
-            android:titleTextColor="#FFFFFF"
+            android:titleTextColor="@color/textPrimary"
             android:layout_marginBottom="15dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -37,8 +37,8 @@
                 android:gravity="center"
                 android:hint="@string/NoteTitle"
                 android:textSize="22sp"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#B0BEC5"
+                android:textColor="@color/textPrimary"
+                android:textColorHint="@color/textSecondary"
                 android:textStyle="bold"
                 android:background="@android:color/transparent"
                 android:layout_marginBottom="12dp" />
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ExampleCreateDate"
                 android:textSize="14sp"
-                android:textColor="#B0BEC5"
+                android:textColor="@color/textSecondary"
                 android:layout_marginBottom="16dp" />
 
             <!-- Kontener na wiele zdjęć -->
@@ -79,8 +79,8 @@
                 android:minLines="3"
                 android:gravity="top|center_horizontal"
                 android:textSize="16sp"
-                android:textColor="#ECEFF1"
-                android:textColorHint="#90A4AE"
+                android:textColor="@color/textPrimary"
+                android:textColorHint="@color/textSecondary"
                 android:background="@drawable/edittext_background_edit_text"
                 android:layout_marginBottom="32dp" />
 
@@ -97,8 +97,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/play_audio"
                     android:visibility="gone"
-                    android:backgroundTint="#546E7A"
-                    android:textColor="#FFFFFF"
+                    style="@style/AppButton"
+                    android:textColor="?attr/colorOnPrimary"
                     android:layout_marginBottom="12dp" />
 
                 <Button
@@ -107,16 +107,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/ShowLocalizationStr"
                     android:visibility="gone"
-                    android:backgroundTint="#546E7A"
-                    android:textColor="#FFFFFF" />
+                    style="@style/AppButton"
+                    android:textColor="?attr/colorOnPrimary" />
 
                 <Button
                     android:id="@+id/btnTakePhotoDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/take_photo"
-                    android:backgroundTint="#546E7A"
-                    android:textColor="#FFFFFF" />
+                    style="@style/AppButton"
+                    android:textColor="?attr/colorOnPrimary" />
 
                 <Button
                     android:id="@+id/btnSaveChanges"
@@ -124,8 +124,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/SaveChangesStr"
                     android:layout_marginTop="24dp"
-                    android:backgroundTint="#4CAF50"
-                    android:textColor="#FFFFFF" />
+                    style="@style/AppButton"
+                    android:textColor="?attr/colorOnPrimary" />
 
             </LinearLayout>
         </LinearLayout>
