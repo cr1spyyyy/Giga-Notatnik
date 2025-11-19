@@ -12,7 +12,7 @@ data class Note(
     val timestamp: Long = System.currentTimeMillis(),
     val type: NoteType = NoteType.TEXT, // TEXT lub AUDIO
     val audioPath: String? = null, // null dla tekstowych
-    val photoPath: String? = null,
+    val photoPaths: List<String> = emptyList(),
     val latitude: Double? = null,
     val longitude: Double? = null
 ): Serializable

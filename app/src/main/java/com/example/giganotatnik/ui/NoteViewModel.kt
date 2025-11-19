@@ -33,14 +33,14 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         audioPath: String,
         latitude: Double? = null,
         longitude: Double? = null,
-        photoPath: String? = null
+        photoPaths: List<String> = emptyList()
     ) {
         val note = Note(
             title = title,
             content = "",
             type = NoteType.AUDIO,
             audioPath = audioPath,
-            photoPath = photoPath,
+            photoPaths = photoPaths,
             latitude = latitude,
             longitude = longitude
         )
@@ -52,7 +52,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     fun addPhotoNote(
         title: String,
         content: String = "",
-        photoPath: String,
+        photoPaths: List<String>,
         latitude: Double? = null,
         longitude: Double? = null
     ) {
@@ -60,7 +60,7 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
             val note = Note(
                 title = title,
                 content = content,
-                photoPath = photoPath,
+                photoPaths = photoPaths,
                 type = NoteType.PHOTO,
                 latitude = latitude,
                 longitude = longitude

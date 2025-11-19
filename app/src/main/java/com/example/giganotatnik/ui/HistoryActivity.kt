@@ -76,9 +76,9 @@ class HistoryActivity : AppCompatActivity() {
                 val intent = Intent(this, NoteDetailActivity::class.java)
                 intent.putExtra("note", note)
                 startActivity(intent)
-            },
-            audioPlayerManager = audioPlayerManager // przekazanie managera
+            }
         )
+
 
         unifiedRecyclerView.layoutManager = LinearLayoutManager(this)
         unifiedRecyclerView.adapter = unifiedAdapter

@@ -6,10 +6,7 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -32,10 +29,11 @@ class CreateNoteActivity : AppCompatActivity() {
     private lateinit var lightManager: LightSensorManager
     private lateinit var notificationHelper: NotificationHelper
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var photoPreview: ImageView
-    private lateinit var takePictureLauncher: ActivityResultLauncher<Uri>
 
-    private var photoUri: Uri? = null
+    private lateinit var photoContainer: LinearLayout
+    private lateinit var takePictureLauncher: ActivityResultLauncher<Uri>
+    private var tempPhotoUri: Uri? = null
+    private val photoUris = mutableListOf<Uri>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,19 +47,16 @@ class CreateNoteActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.createNoteToolbar)
         setSupportActionBar(toolbar)
-
-        // Włącz strzałkę "wstecz"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        photoPreview = findViewById(R.id.photoPreview)
+        photoContainer = findViewById(R.id.photoContainer)
 
-        // Obsługa robienia zdjęcia
         takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-            if (success && photoUri != null) {
-                photoPreview.setImageURI(photoUri)
-                photoPreview.visibility = View.VISIBLE
-                Toast.makeText(this, "Zdjęcie zapisane", Toast.LENGTH_SHORT).show()
+            if (success && tempPhotoUri != null) {
+                photoUris.add(tempPhotoUri!!)
+                updatePhotoContainer()
+                Toast.makeText(this, "Zdjęcie dodane", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -73,29 +68,33 @@ class CreateNoteActivity : AppCompatActivity() {
         val noteEditText = findViewById<EditText>(R.id.editTextNote)
         val saveButton = findViewById<Button>(R.id.btnSaveText)
         val speechButton = findViewById<Button>(R.id.btnSpeechToText)
+        val photoButton = findViewById<Button>(R.id.btnTakePhoto)
 
-        // Obsługa speech-to-text
         speechButton.setOnClickListener {
             speechManager.startListening { text -> noteEditText.setText(text) }
         }
 
-        // Obsługa zapisu notatki tekstowej
+        photoButton.setOnClickListener {
+            val photoFile = File.createTempFile("note_photo_", ".jpg", cacheDir)
+            tempPhotoUri = FileProvider.getUriForFile(this, "${packageName}.provider", photoFile)
+            tempPhotoUri?.let { takePictureLauncher.launch(it) }
+
+        }
+
         saveButton.setOnClickListener {
             val title = findViewById<EditText>(R.id.editTextTitle).text.toString()
-            val text = findViewById<EditText>(R.id.editTextNote).text.toString()
+            val text = noteEditText.text.toString()
 
             getCurrentLocation { location ->
-                if (photoUri != null) {
-                    // jeśli zrobiono zdjęcie
+                if (photoUris.isNotEmpty()) {
                     viewModel.addPhotoNote(
-                        title = title.ifBlank { File(photoUri!!.path!!).name },
+                        title = title.ifBlank { "Notatka ze zdjęciami" },
                         content = text,
-                        photoPath = photoUri.toString(),
+                        photoPaths = photoUris.map { it.toString() },
                         latitude = location?.latitude,
                         longitude = location?.longitude
                     )
                 } else {
-                    // zwykła notatka tekstowa
                     viewModel.addNote(
                         title = title,
                         content = text,
@@ -107,12 +106,19 @@ class CreateNoteActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
 
-        val photoButton = findViewById<Button>(R.id.btnTakePhoto)
-        photoButton.setOnClickListener {
-            val photoFile = File.createTempFile("note_photo_", ".jpg", cacheDir)
-            photoUri = FileProvider.getUriForFile(this, "${packageName}.provider", photoFile)
-            photoUri?.let { uri -> takePictureLauncher.launch(uri) }
+    private fun updatePhotoContainer() {
+        photoContainer.removeAllViews()
+        photoUris.forEach { uri ->
+            val imageView = ImageView(this).apply {
+                layoutParams = LinearLayout.LayoutParams(200, 200).apply {
+                    setMargins(8, 8, 8, 8)
+                }
+                setImageURI(uri)
+                scaleType = ImageView.ScaleType.CENTER_CROP
+            }
+            photoContainer.addView(imageView)
         }
     }
 
@@ -158,7 +164,7 @@ class CreateNoteActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        finish() // wraca do poprzedniego ekranu (np. lista notatek)
+        finish()
         return true
     }
 }

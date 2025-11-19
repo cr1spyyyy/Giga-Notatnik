@@ -81,7 +81,7 @@ class CreateAudioNoteActivity : AppCompatActivity() {
                             audioPath = file.absolutePath,
                             latitude = location?.latitude,
                             longitude = location?.longitude,
-                            photoPath = photoUri?.toString() ?: ""
+                            photoPaths = if (photoUri != null) listOf(photoUri.toString()) else emptyList()
                         )
                         notificationHelper.show(getString(R.string.audio_saved), finalTitle)
                         finish()
