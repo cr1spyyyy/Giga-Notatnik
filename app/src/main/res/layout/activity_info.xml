@@ -27,7 +27,7 @@
             android:id="@+id/infoText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Autorzy:\nSebastian Mikoś\nMichał Kalisiak\n\nAplikacja została stworzona jako projekt na studia na przedmiot:\nProgramowanie urządzeń mobilnych\nUniwersytet Rzeszowski"
+            android:text="Autorzy:\n Sebastian Mikoś\n Michał Kalisiak\n\n Aplikacja została opracowana jako projekt studencki w ramach przedmiotu Programowanie urządzeń mobilnych na Uniwersytecie Rzeszowskim."
             android:textSize="16sp"
             android:textColor="@color/textSecondary"
             android:gravity="center"
