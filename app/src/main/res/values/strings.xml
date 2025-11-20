@@ -8,7 +8,8 @@
     <string name="new_note">Nowa notatka tekstowa</string>
     <string name="audio_note">Nowa notatka głosowa</string>
     <string name="note_history">Historia notatek</string>
-    <string name="back_to_main">Powrót do strony głównej"</string>
+    <string name="back_to_main">Powrót do strony głównej</string>
+    <string name="info">Informacje</string>
 
     <!-- Tworzenie notatki -->
     <string name="note_hint">Wpisz notatkę tekstową</string>

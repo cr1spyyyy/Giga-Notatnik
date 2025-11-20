@@ -41,6 +41,13 @@
         style="@style/AppButton"
         android:text="@string/app_title" />
 
+    <!-- Przycisk informacji -->
+    <Button
+        android:id="@+id/btnInfo"
+        android:textColor="@color/text_on_button"
+        style="@style/AppButton"
+        android:text="@string/info" />
+
     <!-- Przycisk zmiany motywu -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/themeToggleFab"

@@ -23,6 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GigaNotatnik">
         <activity android:name=".ui.CreateAudioNoteActivity" />
+        <activity android:name=".ui.InfoActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -25,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         val historyButton = findViewById<Button>(R.id.btnGoToHistory)
         val recordButton = findViewById<Button>(R.id.btnRecord)
         val themeButton = findViewById<FloatingActionButton>(R.id.themeToggleFab)
+        val infoButton = findViewById<Button>(R.id.btnInfo)
+        infoButton.setOnClickListener {
+            startActivity(Intent(this, InfoActivity::class.java))
+        }
 
         createButton.setOnClickListener {
             startActivity(Intent(this, CreateNoteActivity::class.java))
