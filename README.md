@@ -9,5 +9,5 @@ Aplikacja została opracowana jako projekt studencki w ramach przedmiotu Program
 W razie pytań dotyczących prywatności, prosimy o kontakt: kalisiak.m1ch4l@gmail.com lub sebastian998.pl@gmail.com.
 
 Autorzy:
-Sebastian Mikoś
+Sebastian Mikoś, 
 Michał Kalisiak
