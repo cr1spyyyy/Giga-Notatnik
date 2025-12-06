@@ -19,6 +19,11 @@ class SpeechRecognitionManager(private val context: Context) {
             putExtra(RecognizerIntent.EXTRA_PROMPT, "Mów teraz…")
         }
 
+        if (!SpeechRecognizer.isRecognitionAvailable(context)) {
+            Toast.makeText(context, "Rozpoznawanie mowy niedostępne na tym urządzeniu", Toast.LENGTH_LONG).show()
+            return
+        }
+
         recognizer.setRecognitionListener(object : RecognitionListener {
             override fun onResults(results: Bundle?) {
                 val text = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)?.firstOrNull()

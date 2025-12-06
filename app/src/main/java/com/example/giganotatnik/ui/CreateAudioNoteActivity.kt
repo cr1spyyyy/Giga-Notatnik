@@ -20,8 +20,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.giganotatnik.R
 import com.example.giganotatnik.audio.AudioRecorderManager
 import com.example.giganotatnik.notifications.NotificationHelper
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.huawei.hms.location.FusedLocationProviderClient
+import com.huawei.hms.location.LocationServices
+import com.huawei.hms.location.LocationRequest
+import com.huawei.hms.location.LocationCallback
+import com.huawei.hms.location.LocationResult
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -65,9 +68,16 @@ class CreateAudioNoteActivity : AppCompatActivity() {
         }
         recordButton.setOnClickListener {
             if (!isRecording) {
-                recorderManager.startRecording()
-                isRecording = true
-                recordButton.text = getString(R.string.stop_recording)
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 102)
+                    return@setOnClickListener
+                }
+
+                val file = recorderManager.startRecording()
+                if (file != null) {
+                    isRecording = true
+                    recordButton.text = getString(R.string.stop_recording)
+                }
             } else {
                 val file = recorderManager.stopRecording()
                 if (file != null) {
@@ -124,12 +134,22 @@ class CreateAudioNoteActivity : AppCompatActivity() {
             return
         }
 
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            onLocationReady(location)
-        }.addOnFailureListener {
-            onLocationReady(null)
+        val locationRequest = LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.numUpdates = 1
+        locationRequest.interval = 1000
+
+        val locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                val location = locationResult.lastLocation
+                onLocationReady(location)
+                fusedLocationClient.removeLocationUpdates(this)
+            }
         }
+
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, mainLooper)
     }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

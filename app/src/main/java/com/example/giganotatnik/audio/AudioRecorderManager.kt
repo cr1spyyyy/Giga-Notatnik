@@ -17,18 +17,25 @@ class AudioRecorderManager(private val context: Context) {
         val file = File(context.filesDir, "note_$timestamp.3gp")
         currentFile = file
 
-        recorder = MediaRecorder().apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            setOutputFile(file.absolutePath)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-            prepare()
-            start()
+        return try {
+            recorder = MediaRecorder().apply {
+                setAudioSource(MediaRecorder.AudioSource.MIC)
+                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                setOutputFile(file.absolutePath)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                prepare()
+                start()
+            }
+            Toast.makeText(context, "Nagrywanie rozpoczęte", Toast.LENGTH_SHORT).show()
+            file
+        } catch (e: Exception) {
+            recorder?.release()
+            recorder = null
+            Toast.makeText(context, "Błąd nagrywania: ${e.message}", Toast.LENGTH_LONG).show()
+            null
         }
-
-        Toast.makeText(context, "Nagrywanie rozpoczęte", Toast.LENGTH_SHORT).show()
-        return file
     }
+
 
     fun stopRecording(): File? {
         recorder?.apply {

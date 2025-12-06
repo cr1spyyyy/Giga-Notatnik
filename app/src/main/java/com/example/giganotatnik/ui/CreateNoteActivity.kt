@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,8 +17,12 @@ import com.example.giganotatnik.R
 import com.example.giganotatnik.notifications.NotificationHelper
 import com.example.giganotatnik.sensors.LightSensorManager
 import com.example.giganotatnik.speech.SpeechRecognitionManager
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.huawei.hms.location.FusedLocationProviderClient
+import com.huawei.hms.location.LocationServices
+import com.huawei.hms.location.LocationRequest
+import com.huawei.hms.location.LocationCallback
+import com.huawei.hms.location.LocationResult
+
 import java.io.File
 
 class CreateNoteActivity : AppCompatActivity() {
@@ -71,7 +74,12 @@ class CreateNoteActivity : AppCompatActivity() {
         val photoButton = findViewById<Button>(R.id.btnTakePhoto)
 
         speechButton.setOnClickListener {
-            speechManager.startListening { text -> noteEditText.setText(text) }
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), 101)
+                Toast.makeText(this, "Wymagane uprawnienie do mikrofonu", Toast.LENGTH_SHORT).show()
+            } else {
+                speechManager.startListening { text -> noteEditText.setText(text) }
+            }
         }
 
         photoButton.setOnClickListener {
@@ -138,12 +146,22 @@ class CreateNoteActivity : AppCompatActivity() {
             return
         }
 
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            onLocationReady(location)
-        }.addOnFailureListener {
-            onLocationReady(null)
+        val locationRequest = LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.numUpdates = 1
+        locationRequest.interval = 1000
+
+        val locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                val location = locationResult.lastLocation
+                onLocationReady(location)
+                fusedLocationClient.removeLocationUpdates(this)
+            }
         }
+
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, mainLooper)
     }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -151,12 +169,24 @@ class CreateNoteActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 100 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "Uprawnienia lokalizacji przyznane", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Brak uprawnień do lokalizacji", Toast.LENGTH_SHORT).show()
+        when (requestCode) {
+            100 -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Uprawnienia lokalizacji przyznane", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Brak uprawnień do lokalizacji", Toast.LENGTH_SHORT).show()
+                }
+            }
+            101 -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Uprawnienia mikrofonu przyznane", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Brak uprawnień do mikrofonu", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
