@@ -16,7 +16,7 @@ android {
         applicationId = "com.example.giganotatnik"
         minSdk = 31
         targetSdk = 34
-        versionCode = 2
+        versionCode = 3
         versionName = "1.2"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
